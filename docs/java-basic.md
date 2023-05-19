@@ -20,3 +20,4 @@
 1. [Java Stream](java-core/15-java-stream.md).
 1. [Java I/O](java-core/16-java-io.md).
 1. [Java Spring Boot Framework](java-core/17-java-spring-boot-framework.md).
+1. [Java Quarkus Framework](java-core/18-java-quarkus-framework.md).
