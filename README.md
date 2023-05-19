@@ -4,6 +4,8 @@
 
 ## JAVA GET STARTED
 
+- [Java document guide](https://docs.oracle.com/javase/tutorial/index.html).
+
 ### INSTALL JAVA OPENJDK
 
 - Refer [openJDK](docs/Install-openJDK.md).
