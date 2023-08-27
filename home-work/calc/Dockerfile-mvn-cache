@@ -1,0 +1,40 @@
+# https://stackoverflow.com/questions/52120845/docker-compose-build-with-maven-that-re-uses-the-maven-repository
+FROM maven:alpine as build
+
+# Create a new app directory for my application files.
+RUN mkdir -p /app
+
+# FIRST STEP
+## mvn section START
+## If pom.xml is changed, the mvn cache will download all package again.
+ADD pom.xml /app
+
+## Set the default directory for executing future commands.
+WORKDIR /app
+
+## Download all dependancy packages.
+RUN mvn verify clean --fail-never
+## mvn section END
+
+## build section START
+## Image layer: with the application.
+COPY . /app
+
+## package the app without test.
+RUN mvn clean package -DskipTests
+## build section END
+
+# SECOND STEP.
+FROM openjdk:17
+
+# Create a new app directory for my application files.
+RUN mkdir -p /app
+
+# Copy the app file from host machine to image.
+COPY --from=build /app/target/calc-1.0-SNAPSHOT.jar /app
+
+# Set the default directory for executing future commands.
+WORKDIR /app
+
+# Run the App class
+CMD [ "java", "-jar", "calc-1.0-SNAPSHOT.jar"]
