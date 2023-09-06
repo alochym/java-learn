@@ -92,11 +92,77 @@
         1. mvn test -Dtest=AppTest#shouldAnswerWithTrue
             1. AppTest is the test class name.
             1. shouldAnswerWithTrue is the test method.
+        1. mvn dependency:tree
+1. **Test Driven Development - TDD**
+    1. Write a failing test.
+    1. Write a code to make a test pass.
+    1. Refactor code.
+    1. Repeat a process.
 1. Using Docker to [build image](/home-work/calc/Dockerfile) or [build Java JAR file](/home-work/calc/Dockerfile-mvn-cache).
     1. Using make cli
         1. make image version=1.0
         1. make image-build-cached version=1.0
+1. Integration Testing - ***USING CURL cli***
+   1. Test group of software modules or components(Controller - Service - Repository).
+   1. Should be performed after Unit Test.
 
 ## JAVA SPRING BOOT - WEB API DEVELOPMENT
 
-### 
+### MOCKITO
+
+![Testing with mockito](/images/spring-boot-testing.png)
+
+1. Development process
+    1. Create Mock for DAO(Data Access Object) - **@MockBean**.
+    1. Inject mock into Service - **@Autowired**.
+    1. Set up expectation.
+    1. Calls method under test and assert results.
+    1. Verify method calls - **Optional**.
+
+### SPRING BOOT MVC
+
+![SPRING BOOT MVC](/images/spring-boot-mvc.png)
+
+1. Write design document in Swagger
+1. Repository Layer with Junit Test - [LocationRepositoryTest.java](/spring-boot-mvc-demo/src/test/java/com/github/springbootmvcdemo/repository/LocationRepositoryTest.java)
+   1. Define Entity Class
+      1. Using jackson-databind to bind data request to Java Objects with @JsonProperty and @JsonIgnore.
+      1. Using spring-boot-starter-validation to use @Valid for validation HTTP Requests in Controller Classes.
+   1. Define Table - [Location.java](/spring-boot-mvc-demo/src/main/java/com/github/springbootmvcdemo/models/Location.java)
+1. Service Layer with Junit Test(optional)
+1. Controller Layer with Junit Test - [LocationControllerTest.java](/spring-boot-mvc-demo/src/test/java/com/github/springbootmvcdemo/controllers/LocationControllerTest.java)
+   1. @WebMvcTest: loads only Spring MVC components - REST Controllers.
+   1. @SpringBootTest: TODO
+   1. MockMvc: performs an API calls(HTTP Requests) and Assertion the responses.
+   1. Mockito: fakes Service Objects(@WebMvcTest does not load Service classes).
+      1. @MockBean: Using to inject object if require - fakes Service Objects.
+   1. ObjectMapper: serializes Java Objects to JSON and vice versa.
+      1. https://fasterxml.github.io/jackson-databind/javadoc/2.6/com/fasterxml/jackson/databind/ObjectMapper.html
+   1. JSONPath expression to validate JSON in responses.
+      1. https://github.com/json-path/JsonPath
+1. Integration Test with curl and Postman
+1. Implement Security
+1. Implement Caching
+1. Implement Rate Limit
+1. Document API 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
