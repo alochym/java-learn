@@ -153,10 +153,16 @@ public class LocationControllerTest {
         @Test
         public void testMethodGET404NotFound() throws Exception {
                 /*
-                 * Expected value
+                 * Expected invalue
                  */
-                String code = "NYC_USA";
+                String code = "NYC_USA1";
                 String uri = this.END_POINT_PATH + "/" + code;
+
+                /*
+                 * When ServiceLocation.update method is call and Faked return Location Object.
+                 */
+                String message = "No Location found with given code: " + code;
+                Mockito.when(this.svc.get(code)).thenThrow(new NotFoundException(message));
 
                 /*
                  * Make a HTTP Method GET request with a code that is not in database.

@@ -27,8 +27,19 @@ public class LocationService {
      * Input a code string.
      * Ouput a location if a code is present in database.
      */
-    public Location get(String code) {
-        return this.repo.findByCode(code);
+    // public Location get(String code) {
+    //     return this.repo.findByCode(code);
+    // }
+    public Location get(String code) throws NotFoundException {
+        Location loc = this.repo.findByCode(code);
+                /*
+         * check if code is not found then throw Not Found exception.
+         */
+        if (loc == null) {
+            String message = "No Location found with given code: " + code;
+            throw new NotFoundException(message);
+        }
+        return loc;
     }
 
     /*

@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.github.springbootmvcdemo.exceptions.ErrorDTO;
+import com.github.springbootmvcdemo.exceptions.NotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
@@ -90,8 +92,7 @@ public class GlobalExceptionController extends ResponseEntityExceptionHandler {
 
         err.setTimestamp(new Date());
         err.setStatus(HttpStatus.BAD_REQUEST.value());
-        err.setPath(((ServletWebRequest)request).getRequest().getServletPath());
-        
+        err.setPath(((ServletWebRequest) request).getRequest().getServletPath());
 
         List<FieldError> fieldErrs = e.getBindingResult().getFieldErrors();
 
@@ -107,8 +108,8 @@ public class GlobalExceptionController extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(err, headers, HttpStatus.BAD_REQUEST.value());
     }
 
-   /*
-     * General Exception class - Exception.class
+    /*
+     * General Exception class - ConstraintViolationException.class
      */
     @ExceptionHandler(ConstraintViolationException.class)
 
@@ -135,5 +136,36 @@ public class GlobalExceptionController extends ResponseEntityExceptionHandler {
         // LOGGER.error(e.getMessage(), e);
 
         return err;
-    }   
+    }
+
+    /*
+     * General Exception class - Exception.class
+     */
+    @ExceptionHandler(NotFoundException.class)
+
+    /*
+     * Set Http Status Code for Response.
+     */
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+
+    /*
+     * return the content of Response
+     */
+    @ResponseBody
+    public ErrorDTO handleNotFoundException(Exception e, HttpServletRequest req) {
+        ErrorDTO err = new ErrorDTO();
+
+        err.setTimestamp(new Date());
+        err.setStatus(HttpStatus.NOT_FOUND.value());
+        err.setPath(req.getServletPath());
+        // err.setErrs(e.getMessage());
+        err.addErr(e.getMessage());
+
+        /*
+         * log exception TODO
+         */
+        // LOGGER.error(e.getMessage(), e);
+
+        return err;
+    }
 }

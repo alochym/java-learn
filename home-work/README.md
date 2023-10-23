@@ -142,9 +142,26 @@
       1. https://github.com/json-path/JsonPath
 1. Integration Test with curl and Postman
 1. Implement Security
-1. Implement Caching
-1. Implement Rate Limit
-1. Document API 
+   1. [Keycloak stand a lone server](https://www.keycloak.org/).
+   2. Using own JWT Implementation
+      1. jjwt-impl
+      2. jjwt-jackson
+      3. create jwt folder
+         1. controllers folder
+         2. models folder
+            1. Request Model - AuthenticationRequest
+            2. Response Model - AuthenticationResponse
+            3. User Model to implement UserDetails from Spring Security - UserPrincipal.
+               1. getAuthorities() func - retrieves the list of authorizations of the user.
+               2. isAccountNonLocked() func - which checks whether the user is locked
+               3. isAccountNonExpired() func - which validates that the user is valid and not yet expired
+               4. isEnabled() func - which checks whether the user is active.
+         1. services folder
+         2. filers(middleware) folder
+         3. utils folder
+1. Implement Caching - using redis
+2. Implement Rate Limit
+3. Document API 
 
 
 

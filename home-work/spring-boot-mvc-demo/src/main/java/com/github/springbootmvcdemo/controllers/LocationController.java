@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.springbootmvcdemo.exceptions.ErrorDTO;
 import com.github.springbootmvcdemo.exceptions.NotFoundException;
 import com.github.springbootmvcdemo.models.Location;
 import com.github.springbootmvcdemo.services.LocationService;
@@ -99,15 +100,17 @@ public class LocationController {
      * }
      * 
      */
-    public ResponseEntity<Location> get(@PathVariable("code") String code) {
+    public ResponseEntity<Location> get(@PathVariable("code") String code) throws NotFoundException {
+        /*
+         * Same as not throws Exception
+         * 
+         * public ResponseEntity<?> delete(@PathVariable("code") String code){
+         * ...
+         * }
+         */
+
         Location result = this.svc.get(code);
 
-        // check code is in database or not
-        if (result == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        // Response to client
         return ResponseEntity.ok(result);
     }
 
@@ -145,6 +148,15 @@ public class LocationController {
      * }
      */
     public ResponseEntity<Location> update(@RequestBody @Valid Location l) {
+        /*
+         * Same as throws Exception
+         * 
+         * public ResponseEntity<?> delete(@PathVariable("code") String code) throws
+         * NotFoundException{
+         * ...
+         * }
+         */
+
         try {
             Location result;
             result = this.svc.update(l);
@@ -160,12 +172,13 @@ public class LocationController {
     /*
      * 
      * @PathParam("code") String code
-     * HTTP Request param is bind to code variable    
+     * HTTP Request param is bind to code variable
      * 
      * Delete Operation.
      * 
      * Input a code.
-     * curl -H "content-type:application/json" -XDELETE localhost:8080/v1/locations/GA_USA -vvv
+     * curl -H "content-type:application/json" -XDELETE
+     * localhost:8080/v1/locations/GA_USA -vvv
      * 
      * Ouput 204 No Content Response if code is found in database:
      * Headers
@@ -174,8 +187,16 @@ public class LocationController {
      * < Content-Type: application/json
      * < Transfer-Encoding: chunked.
      * }
-     */    
+     */
     public ResponseEntity<?> delete(@PathVariable("code") String code) {
+        /*
+         * Same as throws Exception
+         * 
+         * public ResponseEntity<?> delete(@PathVariable("code") String code) throws
+         * NotFoundException{
+         * ...
+         * }
+         */
         try {
             this.svc.delete(code);
             return ResponseEntity.noContent().build();

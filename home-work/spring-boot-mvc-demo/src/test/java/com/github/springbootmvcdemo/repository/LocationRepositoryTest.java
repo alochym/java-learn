@@ -19,9 +19,9 @@ import com.github.springbootmvcdemo.models.Location;
 @Rollback(false) // keep data in database after test
 @Nested
 // @TestPropertySource(
-//     properties = {
-//         "spring.datasource.url=jdbc:mysql://42.117.7.84:30778/weatherdb"
-//     }
+// properties = {
+// "spring.datasource.url=jdbc:mysql://42.117.7.84:30778/weatherdb"
+// }
 // )
 public class LocationRepositoryTest {
 
